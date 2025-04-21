@@ -8,15 +8,15 @@
     --accent-color: #f43f5e;
     --accent-light: #fb7185;
     --accent-dark: #e11d48;
-    --bg-color: rgba(15, 23, 42, 0.3);
-    --card-bg: rgba(255, 255, 255, 0.9);
+    --bg-color: #f8fafc;
+    --card-bg: #ffffff;
     --text-color: #1f2937;
     --text-light: #6b7280;
     --border-color: #e5e7eb;
     --success-color: #10b981;
     --danger-color: #ef4444;
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
     --backdrop-blur: blur(15px);
 }
 
@@ -33,44 +33,50 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 2rem 1rem;
+    background-color: var(--bg-color);
     position: relative;
     overflow-x: hidden;
 }
 
-/* Video Background */
-.video-background {
-    position: fixed;
-    top: 0;
-    left: 0;
+/* Advertisement Areas */
+.ad-container {
     width: 100%;
-    height: 100%;
-    z-index: -2;
+    max-width: 728px;
+    margin: 1rem 0;
+    background-color: #f1f5f9;
+    border-radius: 12px;
     overflow: hidden;
+    box-shadow: var(--shadow);
 }
 
-#backgroundVideo {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    transform: translateX(-50%) translateY(-50%);
-    object-fit: cover;
-    filter: brightness(0.5);
+.ad-top {
+    margin-bottom: 1.5rem;
 }
 
-.video-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.7));
-    z-index: -1;
+.ad-bottom {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.ad-placeholder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    color: #94a3b8;
+    text-align: center;
+    min-height: 90px;
+    border: 2px dashed #cbd5e1;
+}
+
+.ad-placeholder i {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.ad-placeholder p {
+    font-size: 0.9rem;
 }
 
 .container {
@@ -84,10 +90,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.5s ease, transform 0.5s ease;
-    backdrop-filter: var(--backdrop-blur);
-    -webkit-backdrop-filter: var(--backdrop-blur);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-color);
 }
 
 header {
@@ -140,7 +143,7 @@ header p {
 
 .search-container {
     padding: 1.25rem 1.5rem;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: #f9fafb;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
@@ -179,6 +182,7 @@ header p {
     display: flex;
     padding: 1.5rem;
     gap: 0.75rem;
+    position: relative;
 }
 
 #taskInput {
@@ -303,6 +307,29 @@ header p {
     color: white;
     border-color: var(--primary-color);
     box-shadow: 0 2px 10px rgba(99, 102, 241, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.filter-btn.active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    opacity: 0;
+    animation: buttonGlow 2s ease-in-out infinite;
+}
+
+@keyframes buttonGlow {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
 }
 
 .task-container {
@@ -393,18 +420,6 @@ header p {
 .task-checkbox:checked {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
-}
-
-.task-checkbox:checked::after {
-    transform: translate(-50%, -50%) scale(1);
-}
-
-.task-checkbox:hover {
-    transform: scale(1.1);
-    border-color: var(--primary-color);
-}
-
-.task-checkbox:checked {
     animation: checkboxPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
@@ -418,6 +433,15 @@ header p {
     100% {
         transform: scale(1);
     }
+}
+
+.task-checkbox:checked::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.task-checkbox:hover {
+    transform: scale(1.1);
+    border-color: var(--primary-color);
 }
 
 .task-text {
@@ -507,7 +531,7 @@ header p {
     border-top: 1px solid var(--border-color);
     font-size: 0.95rem;
     color: var(--text-light);
-    background-color: rgba(248, 250, 252, 0.8);
+    background-color: #f9fafb;
 }
 
 .action-buttons {
@@ -551,11 +575,11 @@ header p {
 }
 
 footer {
-    margin-top: 2rem;
-    color: white;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: var(--text-light);
     font-size: 0.95rem;
     text-align: center;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
     position: relative;
     z-index: 1;
 }
@@ -579,7 +603,7 @@ footer i {
     text-align: center;
     padding: 3rem 1.5rem;
     color: var(--text-light);
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: #f9fafb;
     border-radius: 12px;
     margin: 1rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -597,21 +621,30 @@ footer i {
 /* Mobile optimization */
 @media (max-width: 640px) {
     .container {
-        border-radius: 0;
-        box-shadow: none;
-        height: 100vh;
-        max-height: -webkit-fill-available;
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 12px;
+        margin: 0 0.5rem;
     }
     
     body {
-        padding: 0;
+        padding: 0.5rem;
+    }
+    
+    .ad-container {
+        margin: 0.5rem 0;
+        border-radius: 8px;
+    }
+    
+    .ad-top {
+        margin-bottom: 1rem;
+    }
+    
+    .ad-bottom {
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
     }
     
     .task-container {
-        max-height: calc(100vh - 300px);
+        max-height: 350px;
     }
     
     header h1 {
@@ -682,9 +715,7 @@ footer i {
     }
     
     footer {
-        margin-top: 0;
-        padding: 1rem;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        margin: 0.5rem 0;
     }
     
     #searchInput, #taskInput {
@@ -727,16 +758,9 @@ footer i {
     .task-container {
         max-height: 450px;
     }
-}
-
-/* Fix for iOS Safari viewport height bug */
-@supports (-webkit-touch-callout: none) {
-    .container {
-        max-height: -webkit-fill-available;
-    }
     
-    .task-container {
-        max-height: calc(-webkit-fill-available - 300px);
+    .ad-container {
+        width: 90%;
     }
 }
 
@@ -775,10 +799,6 @@ footer i {
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
-    
-    .video-background {
-        opacity: 0.8;
-    }
 }
 
 /* Task priority indicators */
@@ -800,11 +820,6 @@ footer i {
 /* Adjustments for task completion animation */
 .task-checkbox:checked + div .task-text {
     transition: all 0.3s ease;
-}
-
-/* Task hover state improvements */
-.task-item:hover {
-    transform: translateY(-2px) scale(1.01);
 }
 
 /* Style for task count badge */
@@ -894,29 +909,6 @@ footer i {
     }
 }
 
-/* Transition for task items to support swipe */
-.task-item {
-    transition: all 0.3s ease, transform 0.1s linear, opacity 0.1s linear;
-}
-
-/* Make the container button pulse when new task gets added */
-.task-form {
-    position: relative;
-}
-
-.task-form::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 10px;
-    height: 10px;
-    background: transparent;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -1;
-}
-
 /* Better focus states for accessibility */
 #searchInput:focus, #taskInput:focus {
     outline: none;
@@ -927,50 +919,4 @@ footer i {
 :focus-visible {
     outline: 2px solid var(--primary-light);
     outline-offset: 2px;
-}
-
-/* Improve filter button active state */
-.filter-btn.active {
-    position: relative;
-    overflow: hidden;
-}
-
-.filter-btn.active::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
-    opacity: 0;
-    animation: buttonGlow 2s ease-in-out infinite;
-}
-
-@keyframes buttonGlow {
-    0%, 100% {
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-}
-
-/* Add subtle indicator for swipe feature on mobile */
-@media (max-width: 640px) {
-    .task-item::after {
-        content: '←';
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: rgba(0, 0, 0, 0.1);
-        font-size: 0.8rem;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-    
-    .task-item:active::after {
-        opacity: 0.5;
-    }
 } 
